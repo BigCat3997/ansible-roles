@@ -1,0 +1,4 @@
+- name: Manipulate service status
+  hosts: remote_server
+  roles:
+    - ../roles/manipulate-service-status
