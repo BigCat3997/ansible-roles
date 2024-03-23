@@ -2,6 +2,9 @@ all:
   vars:
     ansible_connection: ssh
   hosts:
-    ec2servers:
+    remote_server:
+      ansible_host: ""
+      ansible_user: ""
+    on_prem_server:
       ansible_host: ""
       ansible_user: ""
