@@ -1,0 +1,30 @@
+---
+- name: Show status of root services
+  shell:
+    cmd: systemctl --type=service {{ services.execute }} {{ item }}
+  register: root_services_register
+  with_items: "{{ services.privilege.root.names }}"
+  when: services.privilege.root.names != ''
+
+- name: Show status of root service
+  debug:
+    msg: |
+      ================================================
+      {{ item.stdout }}
+      ================================================
+  with_items: "{{ root_services_register.results }}"
+
+- name: Show status of user services
+  shell:
+    cmd: systemctl --type=service --user {{ services.execute }} {{ item }}
+  register: user_services_register
+  with_items: "{{ services.privilege.user.names }}"
+  when: services.privilege.user.names != ''
+
+- name: Show status of user service
+  debug:
+    msg: |
+      ================================================
+      {{ item.stdout }}
+      ================================================
+  with_items: "{{ user_services_register.results }}"

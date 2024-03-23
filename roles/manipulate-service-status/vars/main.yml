@@ -1,0 +1,8 @@
+services:
+  execute: status
+  privilege:
+    user:
+      names:
+        - simple-api.service
+    root:
+      names: {}
