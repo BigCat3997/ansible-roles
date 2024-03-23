@@ -1,0 +1,10 @@
+[Unit]
+Description={{ app.description }}
+
+[Service]
+StandardOutput=file:{{ service.stdout }}
+StandardError=file:{{ service.stderr }}
+ExecStart=/bin/bash {{ paths.remote.sh_script }} {{ paths.remote.jar_file }}
+
+[Install]
+WantedBy=multi-user.target

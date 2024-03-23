@@ -1,0 +1,19 @@
+app:
+  name: "simple-api"
+  description: "The simple api to do simple things."
+  env: "dev"
+paths:
+  local:
+    sh_script: "entrypoint.sh"
+    service_file: "app.service.j2"
+  remote:
+    work_dir: "/data/app/{{ app.name }}"
+    sh_script: "/data/app/{{ app.name }}/entrypoint.sh"
+    jar_file: "/data/app/{{ app.name }}/app.jar"
+    service_user_dir: "~/.config/systemd/user"
+    service_file: "~/.config/systemd/user/{{ app.name }}.service"
+    logs_dir: "/data/app/{{ app.name }}/logs"
+service:
+  name: "{{ app.name }}.service"
+  stdout: "{{ paths.remote.work_dir }}/logs/stdout.log"
+  stderr: "{{ paths.remote.work_dir }}/logs/stderr.log"

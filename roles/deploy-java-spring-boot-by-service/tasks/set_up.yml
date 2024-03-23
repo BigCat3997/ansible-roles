@@ -1,0 +1,14 @@
+- name: Ensures user's service dir exists
+  file:
+    path: "{{ paths.remote.service_user_dir }}"
+    state: directory
+
+- name: Ensures app's work dir exists
+  file:
+    path: "{{ paths.remote.work_dir }}"
+    state: directory
+
+- name: Ensures app's logs dir exists
+  file:
+    path: "{{ paths.remote.logs_dir }}"
+    state: directory

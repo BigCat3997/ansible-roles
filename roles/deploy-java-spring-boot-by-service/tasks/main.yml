@@ -1,0 +1,31 @@
+- name: Set up dirs
+  import_tasks:
+    file: set_up.yml
+
+- name: Copy jar file to server
+  copy:
+    src: "{{ item }}"
+    dest: "/data/app/{{ app.name }}/app.jar"
+  with_fileglob:
+    - "*.jar"
+
+- name: Copy execute script to server
+  template:
+    src: "{{ paths.local.sh_script }}"
+    dest: "{{ paths.remote.sh_script }}"
+    mode: "750"
+
+- name: Copy systemd service file to server
+  template:
+    src: "{{ paths.local.service_file }}"
+    dest: "{{ paths.remote.service_file }}"
+    mode: "750"
+  notify:
+    - "Reload systemctl user scope"
+
+- name: Restart service
+  ansible.builtin.systemd:
+    name: "{{ service.name }}"
+    state: restarted
+    enabled: yes
+    scope: "user"
