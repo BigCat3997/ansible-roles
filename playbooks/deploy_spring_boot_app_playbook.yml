@@ -1,0 +1,4 @@
+- name: Deploy Spring Boot app
+  hosts: remote_server
+  roles:
+    - ../roles/deploy-java-spring-boot-by-service
